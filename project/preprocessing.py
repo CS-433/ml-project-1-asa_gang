@@ -100,7 +100,7 @@ def preprocess_data_new(X_train, X_test, y_train):
     X_train_groups , _= divide_into_subgroups(X_train, jet_num_train)
     y_train_groups, _ = divide_into_subgroups(y_train, jet_num_train)
     X_test_groups, masks = divide_into_subgroups(X_test, jet_num_test)
-    # TODO
+  
     black_listed_columns = {
         'group_0': [4, 5, 6, 22, 23, 24, 25, 26, 27, 28, 29],
         'group_1': [4, 5, 6, 22, 26, 27, 28],

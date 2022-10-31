@@ -71,7 +71,6 @@ def calculate_loss_log(y, tx, w):
         - w : Weight vector
     """
     eta = tx.dot(w)
-    eta[eta > 700] = 700
     loss = np.sum(np.log(1+np.exp(eta))-y*(eta))
 
 
@@ -272,7 +271,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     # In case the targets are still in (-1, 1) range
     y =  (y > 0.) * 1.0
 
-    w = initial_w
+    w = initial_w.copy()
     
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])

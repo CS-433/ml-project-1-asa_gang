@@ -70,9 +70,9 @@ def calculate_loss_log(y, tx, w):
         - x:  Data Matrix
         - w : Weight vector
     """
-    eta = tx.dot(w)
-    eta[eta>700]=700
-    loss = np.mean(np.log(1+np.exp(eta))-y*(eta))
+    pred = sigmoid(tx.dot(w))
+    loss = np.mean(y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred)))
+    return -loss
 
 
 # -*------------------------- Gradient ---------------------------------*-

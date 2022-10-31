@@ -70,10 +70,8 @@ def calculate_loss_log(y, tx, w):
         - x:  Data Matrix
         - w : Weight vector
     """
-    
-    pred = sigmoid(tx.dot(w))
-    loss = y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred))
-    return np.squeeze(- loss)
+    eta = tx.dot(w)
+    loss = np.sum(np.log(1+np.exp(eta))-y*(eta))
 
 
 # -*------------------------- Gradient ---------------------------------*-
@@ -286,9 +284,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
         # Compute gradient & update w
         grad = compute_gradient_logistic(y, tx, w)
         w = w - gamma * grad
-    print(y)
-    print(w)
-    print(tx)
+
     loss= calculate_loss_log(y, tx, w)
             
     return w, loss

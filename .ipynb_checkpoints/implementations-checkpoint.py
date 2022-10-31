@@ -4,16 +4,6 @@ from helpers import *
 
 # -*------------------------- Tools ---------------------------------*-
 
-def _verify_range (x, limits) : 
-    """
-    Verifies the received array for extreme values defined by the threshold and return the modified array
-    Input : 
-        - x : array of floats
-        - limits : array defining the upper and lower boundaries
-    """
-    x[x>limits[0]]=limits[0]
-    x[x<limits[1]]=limits[1]
-    return x
 
 def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
     """
@@ -54,9 +44,7 @@ def compute_mse(y, tx, w):
         - x:  Data Matrix
         - w : Weight Vector
     """
-    
-    # If the error is found out of the boundaries then the loss becomes infinite 
-    # So we limite it bewteen 1e150& -1e150  (find in en emprical way)  
+     
     e =(y - tx.dot(w))
     
     # Factor of 0.5 to be consistent with the course
@@ -83,8 +71,7 @@ def calculate_loss_log(y, tx, w):
         - w : Weight vector
     """
     eta = (np.matmul(tx, w))
-    eta[eta > 700] = 700
-    return (1/len(y))*( np.sum(np.log(1+np.exp(eta))-y*(eta)))
+    return (1/len(y))*(np.sum(np.log(1+np.exp(eta))-y*(eta)))
 
 # -*------------------------- Gradient ---------------------------------*-
 
@@ -96,7 +83,7 @@ def compute_gradient_mse(y, tx, w):
         - tx: Data Matrix
         - w : Weight vector
     """
-    err = _verify_range(y - tx.dot(w), [1e150,-1e150])
+    err = (y - tx.dot(w))
     grad = -tx.T.dot(err) / len(err)
     return grad
 
@@ -115,9 +102,6 @@ def compute_gradient_logistic(y, tx, w):
 
 def sigmoid(t):
     """Apply sigmoid function on the input parameter t."""
-
-    #limit the value of t to avoid the infinite term
-    t[t<-700]=-700
     return (1.0 / (1 + np.exp(-t)))
 
 # -*------------------------- Predication and Accuracy ---------------------------------*

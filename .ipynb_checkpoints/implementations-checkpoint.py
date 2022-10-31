@@ -270,12 +270,13 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     '''
     # In case the targets are still in (-1, 1) range
     y =  (y > 0.) * 1.0
-
     w = initial_w.copy()
+    print(w)
     
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])
     w = initial_w
+    
   
     
     # Start Logistic Regression
@@ -311,8 +312,8 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
 
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])
-    w = initial_w
-    
+    w = initial_w.copy()
+    print(w)
     
     # Start Logistic Regression
     for i in range(max_iters):

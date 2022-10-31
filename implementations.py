@@ -308,13 +308,12 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
 
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])
-    w = initial_w.copy()
-    print(w)
-    
+    w = initial_w
+   
     # Start Logistic Regression
     for i in range(max_iters):
         gradient = compute_gradient_logistic(y, tx, w) + 2 * lambda_ * w
         w=w-gamma*gradient
         
-    loss = calculate_loss_log(y, tx, w) + lambda_ * np.squeeze(w.T.dot(w))
+    loss = calculate_loss_log(y, tx, w) 
     return w, loss

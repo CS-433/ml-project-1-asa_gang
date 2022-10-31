@@ -70,8 +70,11 @@ def calculate_loss_log(y, tx, w):
         - x:  Data Matrix
         - w : Weight vector
     """
-    eta = (tx.dot(w))
-    return (np.sum(np.log(1+np.exp(eta))-y*(eta)))
+    
+    pred = sigmoid(tx.dot(w))
+    loss = y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred))
+    return np.squeeze(- loss)
+
 
 # -*------------------------- Gradient ---------------------------------*-
 

@@ -71,7 +71,7 @@ def calculate_loss_log(y, tx, w):
         - w : Weight vector
     """
     pred = sigmoid(tx.dot(w))
-    loss = np.mean(y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred)))
+    loss = (y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred)))/len(y)
     return -loss
 
 

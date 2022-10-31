@@ -72,7 +72,7 @@ def calculate_loss_log(y, tx, w):
     """
     pred = sigmoid(tx.dot(w))
     loss = (y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred)))/len(y)
-    return -loss
+    return np.squeeze(-loss)
 
 
 # -*------------------------- Gradient ---------------------------------*-

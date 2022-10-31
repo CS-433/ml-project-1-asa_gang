@@ -288,6 +288,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
         w = w - gamma * grad
 
     loss= calculate_loss_log(y, tx, w)
+    print(loss)
             
     return w, loss
 

@@ -70,8 +70,9 @@ def calculate_loss_log(y, tx, w):
         - x:  Data Matrix
         - w : Weight vector
     """
-    eta = (tx.dot(w))
-    return (np.sum(np.log(1+np.exp(eta))-y*(eta)))
+    pred = sigmoid(tx.dot(w))
+    loss = y.T.dot(np.log(pred)) + (1 - y).T.dot(np.log(1 - pred))
+    return np.squeeze(- loss)
 
 # -*------------------------- Gradient ---------------------------------*-
 
@@ -251,7 +252,7 @@ def ridge_regression(y, tx, lambda_):
     loss = compute_mse(y, tx, w)
     return w, loss
 
-def logistic_regression(y, tx, initial_w, max_iters, gamma, threshold = 1e-8):
+def logistic_regression(y, tx, initial_w, max_iters, gamma):
     '''
     Computes the weights and associated loss for a logistic regression solving y=sigmoid(tx @ w) using Gradient Descent. 
     This method aims at finding w such that it it minimizes the negative log likelihood (may find local mimimum).
@@ -262,14 +263,14 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma, threshold = 1e-8):
         - initial_w : Initial weight vector (set to 0 if not given) to start the GD algorithm.
         - max_iters : Number of iteration for GD
         - gamma : learning rate for GD 
-        - threshold : defined how much the loss has to changed over the iteration to continue the GD Algorithm
         
     Ouput : 
         - w : Weight Vectors
         - loss : RMSE of the computed prediction and the expected value y
     '''
     # In case the targets are still in (-1, 1) range
-    y = np.maximum(0, y)
+    y =  (y > 0.) * 1.0
+
     w = initial_w
     
     # Initiate weights to zero since they tend to be small during optimization
@@ -289,7 +290,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma, threshold = 1e-8):
     return w, loss
 
 
-def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma, threshold = 1e-8):
+def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
     '''
     Computes the weights and associated loss for a logistic regression solving y=sigmoid(tx @ w)
     using Gradient Descent and using a penalization term lambda_.
@@ -300,14 +301,13 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma, thresho
         - tx : Data Matrix
         - lambda_ : learning rate L1 Regression
         - gamma : learning rate for GD 
-        - threshold : defined how much the loss has to changed over the iteration to continue the GD Algorithm
         
     Ouput : 
         - w : Weight Vectors
         - loss : RMSE of the computed prediction and the expected value y
     '''
     # In case the targets are still in (-1, 1) range
-    y = np.maximum(0, y)
+    y =  (y > 0.) * 1.0
 
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])

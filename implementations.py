@@ -70,7 +70,7 @@ def calculate_loss_log(y, tx, w):
         - x:  Data Matrix
         - w : Weight vector
     """
-    eta = (np.matmul(tx, w))
+    eta = (np.dot(tx,w))
     return (np.sum(np.log(1+np.exp(eta))-y*(eta)))
 
 # -*------------------------- Gradient ---------------------------------*-

@@ -71,7 +71,7 @@ def calculate_loss_log(y, tx, w):
         - w : Weight vector
     """
     eta = (np.matmul(tx, w))
-    return (1/len(y))*(np.sum(np.log(1+np.exp(eta))-y*(eta)))
+    return (np.sum(np.log(1+np.exp(eta))-y*(eta)))
 
 # -*------------------------- Gradient ---------------------------------*-
 

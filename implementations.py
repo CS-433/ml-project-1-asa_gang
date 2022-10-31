@@ -275,7 +275,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma, threshold = 1e-8):
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])
     w = initial_w
-    losses=[]
+  
     
     # Start Logistic Regression
     for i in range(max_iters):
@@ -283,34 +283,11 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma, threshold = 1e-8):
         # Compute gradient & update w
         grad = compute_gradient_logistic(y, tx, w)
         w = w - gamma * grad
-        
-        # Compute loss  
-        loss = calculate_loss_log(y, tx, w)
-        losses.append(loss)
-        
-        # Stop the search if the loss has not changed enough
-        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
-            break
-            
-    return w, losses[-1]
-
-def penalized_logistic_regression(y, tx, w, lambda_, gamma):
-    """
-    Computes one step of gradient descent for regularized logistic regression.
-    Input : 
-        - y : Expected value vector
-        - x : Data Matrix
-        - lambda_ : L1- Regularization term 
-        - gamma : learning rate GD 
-    output : 
-        - w : Weight vectors
-        - loss : RMSE of the prediction and the expected value 
-    """
     
-    gradient = compute_gradient_logistic(y, tx, w) + 2 * lambda_ * w
-    w=w-gamma*gradient
-    loss = calculate_loss_log(y, tx, w) + lambda_ * np.squeeze(w.T.dot(w))
+    loss= calculate_loss_log(y, tx, w)
+            
     return w, loss
+
 
 def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma, threshold = 1e-8):
     '''
@@ -335,16 +312,11 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma, thresho
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])
     w = initial_w
-    losses=[]
+    
     
     # Start Logistic Regression
     for i in range(max_iters):
-        # Compute gradient & update w
-        w, loss = penalized_logistic_regression(y, tx, w, lambda_, gamma)
-        losses.append(loss)
-        
-        # Verify if the loss has sufficiently changed
-        if len(losses) > 1 and np.abs(losses[-1] - losses[-2]) < threshold:
-            break
-
-    return w, losses[-1]
+        gradient = compute_gradient_logistic(y, tx, w) + 2 * lambda_ * w
+        w=w-gamma*gradient
+    loss = calculate_loss_log(y, tx, w) + lambda_ * np.squeeze(w.T.dot(w))
+    return w, loss

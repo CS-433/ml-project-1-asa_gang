@@ -57,10 +57,10 @@ def compute_mse(y, tx, w):
     
     # If the error is found out of the boundaries then the loss becomes infinite 
     # So we limite it bewteen 1e150& -1e150  (find in en emprical way)  
-    e = _verify_range(y - tx.dot(w), [1e150,-1e150])
+    e =(y - tx.dot(w))
     
     # Factor of 0.5 to be consistent with the course
-    mse = (e**2/(2*len(e)))
+    mse = ((1/2)*np.mean(e**2))
     return mse
 
 def compute_rmse(y, tx, w) : 

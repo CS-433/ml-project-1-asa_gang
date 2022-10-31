@@ -99,7 +99,7 @@ def compute_gradient_logistic(y, tx, w):
         - w : Weight vector
     """
     pred = sigmoid(tx.dot(w))
-    grad = tx.T.dot(pred - y)
+    grad = tx.T.dot(pred - y)/len(pred)
     return grad
 
 def sigmoid(t):
@@ -271,25 +271,19 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
     '''
     # In case the targets are still in (-1, 1) range
     y =  (y > 0.) * 1.0
-    w = initial_w.copy()
-    print(w)
     
     # Initiate weights to zero since they tend to be small during optimization
     if (initial_w is None) : initial_w = np.zeros(tx.shape[1])
     w = initial_w
     
-  
-    
     # Start Logistic Regression
     for i in range(max_iters):
-    
         # Compute gradient & update w
         grad = compute_gradient_logistic(y, tx, w)
         w = w - gamma * grad
+        print(grad)
 
-    loss= calculate_loss_log(y, tx, w)
-    print(loss)
-            
+    loss= calculate_loss_log(y, tx, w)      
     return w, loss
 
 

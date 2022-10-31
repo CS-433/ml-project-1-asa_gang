@@ -71,6 +71,7 @@ def calculate_loss_log(y, tx, w):
         - w : Weight vector
     """
     eta = tx.dot(w)
+    eta[eta > 700] = 700
     loss = np.sum(np.log(1+np.exp(eta))-y*(eta))
 
 

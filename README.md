@@ -18,14 +18,13 @@ The provided Python code uses the libraries of numpy (as np) for computation and
 
 The folders should be in the below structure:
 
-    ├── project
-        ├── analysis.ipynb
-        ├── cross_val.py
-        ├── helpers.py
-        ├── implementations.py
-        ├── preprocessing.py
-        ├── run.py
-    └── README.md
+     ├── analysis.ipynb
+     ├── cross_val.py
+     ├── helpers.py
+     ├── implementations.py
+     ├── preprocessing.py
+     ├── run.py
+     └── README.md
 
 In order to reproduce the code, one needs to run the `run.py` file (`python3 run.py`). The prediction output will be written to `submission_final.csv` file with {-1/1} labels.
 

@@ -42,7 +42,7 @@ In order to reproduce the code, one needs to run the `run.py` file (`python3 run
 
 ### Training
 
-`implementations.py`: Implements 6 different machine learning methods taking into account their corresponding loss functions. Uses RMSE loss for `mean_squared_error_GD`, `mean_squared_error_SGD`, `least_squares`, and `ridge regression`. Uses log-loss for `logistic_regression` and `reg_logistic_regression`.
+`implementations.py`: Implements 6 different machine learning methods taking into account their corresponding loss functions. Uses MSE loss for `mean_squared_error_GD`, `mean_squared_error_SGD`, `least_squares`, and `ridge regression`. Uses log-loss for `logistic_regression` and `reg_logistic_regression`.
 
 ### Model Selection
 

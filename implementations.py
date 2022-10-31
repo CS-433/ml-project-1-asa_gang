@@ -43,24 +43,13 @@ def compute_mse(y, tx, w):
         - y : Expected value vector
         - x:  Data Matrix
         - w : Weight Vector
-    """
-     
+    """  
     e =(y - tx.dot(w))
     
     # Factor of 0.5 to be consistent with the course
     mse = ((1/2)*np.mean(e**2))
     return mse
 
-def compute_rmse(y, tx, w) : 
-    """
-    Computes and Returns the Root Mean Square Error. 
-    Input 
-        - y : Expected value vector
-        - x:  Data Matrix
-        - w : Weight vector
-        """
-    mse = compute_mse(y, tx, w)
-    return np.sqrt(2*mse)
 
 def calculate_loss_log(y, tx, w):
     """ 
@@ -103,7 +92,9 @@ def compute_gradient_logistic(y, tx, w):
     return grad
 
 def sigmoid(t):
-    """Apply sigmoid function on the input parameter t."""
+    """
+    Apply sigmoid function on the input parameter t.
+    """
     return (1.0 / (1 + np.exp(-t)))
 
 # -*------------------------- Predication and Accuracy ---------------------------------*
@@ -168,7 +159,7 @@ def mean_squared_error_gd(y, tx, initial_w=None, max_iters=50, gamma=0.1):
         - gamma : learning rate for GD 
     Output : 
         - w : Weight Vectors
-        - loss : RMSE of the calculated prediction (tx@w) and the expected value y using the final w 
+        - loss : MSE of the calculated prediction (tx@w) and the expected value y using the final w 
     """
   
     # Initiate weights to zero since they tend to be small during optimization
@@ -197,7 +188,7 @@ def mean_squared_error_sgd(y, tx, initial_w= None, max_iters=50, gamma=0.1):
         - gamma : learning rate for GD 
     Output : 
         - w : Weight Vectors
-        - loss : RMSE of the calculated prediction (tx@w) and the expected value y using the final w 
+        - loss : MSE of the calculated prediction (tx@w) and the expected value y using the final w 
     """
     
     # Initiate weights to zero since they tend to be small during optimization
@@ -225,7 +216,7 @@ def least_squares(y, tx):
        
     Output : 
         - w : Weight Vectors
-        - loss : RMSE of the calculated prediction (tx@w) and the expected value y
+        - loss : MSE of the calculated prediction (tx@w) and the expected value y
     """
     a = tx.T.dot(tx)
     b = tx.T.dot(y)
@@ -244,7 +235,7 @@ def ridge_regression(y, tx, lambda_):
         - lambda_ :  L1- Regularization term 
     Ouput : 
         - w : Weight Vectors 
-        - loss : RMSE of the computed prediction (tx@w) and the expected value y
+        - loss : MSE of the computed prediction (tx@w) and the expected value y
     """
     a = tx.T.dot(tx) + 2*tx.shape[0]*lambda_*np.identity(tx.shape[1])
     b = tx.T.dot(y)
@@ -267,7 +258,7 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
         
     Ouput : 
         - w : Weight Vectors
-        - loss : RMSE of the computed prediction and the expected value y
+        - loss : MSE of the computed prediction and the expected value y
     '''
     # In case the targets are still in (-1, 1) range
     y =  (y > 0.) * 1.0
@@ -281,7 +272,6 @@ def logistic_regression(y, tx, initial_w, max_iters, gamma):
         # Compute gradient & update w
         grad = compute_gradient_logistic(y, tx, w)
         w = w - gamma * grad
-        print(grad)
 
     loss= calculate_loss_log(y, tx, w)      
     return w, loss
@@ -301,7 +291,7 @@ def reg_logistic_regression(y, tx, lambda_, initial_w, max_iters, gamma):
         
     Ouput : 
         - w : Weight Vectors
-        - loss : RMSE of the computed prediction and the expected value y
+        - loss : MSE of the computed prediction and the expected value y
     '''
     # In case the targets are still in (-1, 1) range
     y =  (y > 0.) * 1.0
